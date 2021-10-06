@@ -1,0 +1,57 @@
+{
+  "name": "reminder",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@progress/kendo-data-query": "^1.5.5",
+    "@progress/kendo-date-math": "^1.5.2",
+    "@progress/kendo-drawing": "^1.11.0",
+    "@progress/kendo-licensing": "^1.2.0",
+    "@progress/kendo-react-animation": "^4.8.0",
+    "@progress/kendo-react-buttons": "^4.8.0",
+    "@progress/kendo-react-data-tools": "^4.8.0",
+    "@progress/kendo-react-dateinputs": "^4.8.0",
+    "@progress/kendo-react-dialogs": "^4.8.0",
+    "@progress/kendo-react-dropdowns": "^4.8.0",
+    "@progress/kendo-react-form": "^4.8.0",
+    "@progress/kendo-react-grid": "^4.8.0",
+    "@progress/kendo-react-inputs": "^4.8.0",
+    "@progress/kendo-react-intl": "^4.8.0",
+    "@progress/kendo-react-popup": "^4.8.0",
+    "@progress/kendo-react-scheduler": "^4.8.0",
+    "@progress/kendo-react-treeview": "^4.8.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.21.4",
+    "cldr-core": "^39.0.0",
+    "cldr-data": "^36.0.0",
+    "cldr-dates-full": "^39.0.0",
+    "cldr-numbers-full": "^39.0.0",
+    "globalize": "^1.7.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "CI= react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
