@@ -1,0 +1,11 @@
+*.pyc
+*~
+*.log
+*.pid
+db.sqlite3
+node_modules
+FrontEnd/build
+/static
+/logs
+__pycache__/
+.vscode
