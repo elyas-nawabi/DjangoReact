@@ -144,7 +144,7 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + mi
       TaskId: guid()
     }))));
     if (deleted != '') {
-      axios.delete(`http://localhost:8000/crud/${deleted[0].TaskId}/`)   
+      axios.delete(`http://localhost:8000/crud?${deleted[0].TaskId}`)   
     }
     if (updated.length !== 0) {
       axios

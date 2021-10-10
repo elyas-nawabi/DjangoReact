@@ -1,13 +1,12 @@
+from rest_framework import status
 from django.shortcuts import render
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework import viewsets
 from . models import *
 from rest_framework.response import Response
 from . serializer import *
 
 # Create your views here.
-
-
 # class ReactView(APIView):
 
 #     serializer_class = ReactSerializer
@@ -39,31 +38,50 @@ from . serializer import *
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
     
-class ReactView(viewsets.ModelViewSet):
+# class ReactView(viewsets.ModelViewSet):
     
-    serializer_class = ReactSerializer
-    queryset = React.objects.all()
+#     serializer_class = ReactSerializer
+#     queryset = React.objects.all()
 
+@api_view(['GET', 'POST'])
+def schedular_list(request):
+    """
+    List all code snippets, or create a new schedular.
+    """
+    if request.method == 'GET':
+        schedular = Schedular.objects.all()
+        serializer = SchedularSerializer(schedular, many=True)
+        return Response(serializer.data)
 
+    elif request.method == 'POST':
+        serializer = SchedularSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET', 'PUT', 'DELETE'])
+def schedular_detail(request, pk):
+    """
+    Retrieve, update or delete a code schedular.
+    """
+    try:
+        schedular = Schedular.objects.get(pk=pk)
+    except Schedular.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
+    if request.method == 'GET':
+        serializer = SchedularSerializer(schedular)
+        return Response(serializer.data)
 
+    elif request.method == 'PUT':
+        serializer = SnippetSerializer(schedular, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#     @api_view(['PUT', 'DELETE'])
-# def students_detail(request, pk):
-    # try:
-    #     student = Student.objects.get(pk=pk)
-    # except Student.DoesNotExist:
-    #     return Response(status=status.HTTP_404_NOT_FOUND)
+    elif request.method == 'DELETE':
+        schedular.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-    # if request.method == 'PUT':
-    #     serializer = StudentSerializer(
-    #         student, data=request.data, context={'request': request})
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(status=status.HTTP_204_NO_CONTENT)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # elif request.method == 'DELETE':
-    #     student.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
