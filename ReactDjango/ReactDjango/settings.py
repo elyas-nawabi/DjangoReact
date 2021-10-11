@@ -26,8 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'core.apps.CoreConfig',
-    'BackEnd.apps.CoreConfig',
+    'backend.apps.CoreConfig',
     'corsheaders',
 ]
 
@@ -43,7 +42,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-ROOT_URLCONF = 'backend.urls'
+ROOT_URLCONF = 'reactdjango.urls'
 
 TEMPLATES = [
     {
@@ -61,7 +60,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+WSGI_APPLICATION = 'reactdjango.wsgi.application'
 
 
 # Database

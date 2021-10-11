@@ -61,12 +61,14 @@ def schedular_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def schedular_detail(request, pk):
+def schedular_detail(request, taskId):
     """
     Retrieve, update or delete a code schedular.
     """
+    print(request.method," test 1")
+
     try:
-        schedular = Schedular.objects.get(pk=pk)
+        schedular = Schedular.objects.get(taskId=taskId)
     except Schedular.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -75,13 +77,14 @@ def schedular_detail(request, pk):
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = SnippetSerializer(schedular, data=request.data)
+        serializer = SchedularSerializer(schedular, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
+        print(request.method," test 2")
         schedular.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

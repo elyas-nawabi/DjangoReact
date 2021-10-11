@@ -30,14 +30,14 @@ loadMessages(esMessages, 'es-ES');
 const App = () => {
   const [baseData, setbaseData] = useState([{}]);
   React.useEffect(async () => {
-    await axios.get('http://localhost:8000/crud')
+    await axios.get('http://localhost:8000/schedulars')
       .then(res => {
         //console.log(res.data)
         setbaseData(res.data)
       })
   }, []);
   const customModelFields = {
-    TaskId: 'TaskId',
+    taskId: 'taskId',
     title: 'title',
     description: 'description',
     start: 'start',
@@ -140,19 +140,21 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + mi
     updated,
     deleted
   }) => {
-    setData(old => old.filter(item => deleted.find(current => current.TaskId === item.TaskId) === undefined).map(item => updated.find(current => current.TaskId === item.TaskId) || item).concat(created.map(item => Object.assign({}, item, {
-      TaskId: guid()
+    setData(old => old.filter(item => deleted.find(current => current.taskId === item.taskId) === undefined).map(item => updated.find(current => current.taskId === item.taskId) || item).concat(created.map(item => Object.assign({}, item, {
+      taskId: guid()
     }))));
     if (deleted != '') {
-      axios.delete(`http://localhost:8000/crud?${deleted[0].TaskId}`)   
+      axios.delete(`http://localhost:8000/schedulars/${deleted[0].taskId}`)   
     }
     if (updated.length !== 0) {
       axios
-        .put(`http://localhost:8000/crud/${updated[0].TaskId}/`, updated[0])
+        .put(`http://localhost:8000/schedulars/${updated[0].taskId}`, updated[0])
+
     }
     if (created.length !== 0) {
       axios
-        .post(`http://localhost:8000/crud/`, {TaskId:39,...created[0]})
+        .post(`http://localhost:8000/schedulars/`, {taskId:guid(),...created[0]})
+        console.log(created[0])
     }
   }, [setData]);
   return <div>
