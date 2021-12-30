@@ -23,7 +23,9 @@ import '@progress/kendo-date-math/tz/America/New_York';
 import '@progress/kendo-date-math/tz/America/Los_Angeles';
 import esMessages from './es.json';
 import axios from "axios";
-import { sampleDataWithCustomSchema, displayDate, customModelFields } from './events-utc';
+import { FormWithCustomEditor } from "./custom-form";
+// import { EditItemWithDynamicTitle } from "./custom-item";
+import { sampleDataWithCustomSchema, displayDate, customModelFields } from './events-utcMain';
 load(likelySubtags, currencyData, weekData, numbers, currencies, caGregorian, dateFields, timeZoneNames);
 loadMessages(esMessages, 'es-ES');
 
@@ -57,8 +59,8 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + mi
       ...dataItem,
       start: parseAdjust(dataItem.start),
       end: parseAdjust(dataItem.end),
-      PersonIDs: randomInt(1, 2),
-      RoomID: randomInt(1, 2)
+      DeviceIDs: randomInt(1, 2),
+      StationID: randomInt(1, 2)
     })
     );
     setData(sampleDataWithCustomSchema)
@@ -91,50 +93,7 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + mi
   const handleOrientationChange = React.useCallback(event => {
     setOrientation(event.target.getAttribute('data-orientation'));
   }, []);
-  // const handleDataChange = React.useCallback(({
-  //   created,
-  //   updated,
-  //   deleted
-  // }) => {
-  //   // setData(
-  //   //   old => old.filter(item => deleted.find(
-  //   //   current => current.TaskID === item.TaskID) === undefined)
-  //   //   .map(item => updated.find(current => current.TaskID === item.TaskID)
-  //   //    || item).concat(
-  //   //   created.map(item => Object.assign({}, item, {
-  //   //   TaskID: guid()
-  //   // }))));
-  //   // console.log(data)
 
-  //   // console.log(deleted);
-  //   let filtered = data.filter(item => deleted.find(current => current.TaskId === item.TaskId) === undefined)
-
-  //   // console.log(filtered);
-
-  //   let updatedData = filtered.map(item => updated.find(current => current.TaskId === item.TaskId) || item)
-
-  //   // console.log(updated);
-  //   console.log(updatedData,"updated data");
-
-  //   // console.log('without id ', created);
-  //   // let itemsWithID = created.map(item => Object.assign({}, item, {
-  //   //   TaskID: guid()
-  //   // }))
-
-  //   // console.log('with Id ', itemsWithID);
-
-  //  // updatedData = updatedData.concat(itemsWithID);
-
-  //   setData(n => [...n, updatedData]);
-  //   console.log(data);
-  // }, [data]);
-  // const handleTestCase = () => {
-  //   fetch('http://127.0.0.1:8000/wel/')
-  //     .then(response => response.json())
-  //     .then(json => { alert(json); console.log(json) })
-
-  //   //  console.log(data)
-  // }
   const handleDataChange = React.useCallback(({
     created,
     updated,
@@ -157,6 +116,8 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + mi
         console.log(created[0])
     }
   }, [setData]);
+
+
   return <div>
 
     <div className="example-config">
@@ -181,39 +142,46 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + mi
     </div>
     <LocalizationProvider language={locale.language}>
       <IntlProvider locale={locale.locale}>
-        <Scheduler data={data} onDataChange={handleDataChange} view={view} onViewChange={handleViewChange} date={date} onDateChange={handleDateChange} editable={true} timezone={timezone} modelFields={customModelFields} group={{
-          resources: ['Rooms', 'Persons'],
+        <Scheduler data={data} 
+        form={FormWithCustomEditor}
+        // editItem={EditItemWithDynamicTitle}
+        group={{
+          resources: ['Devices', 'Sectors'],
           orientation
         }} resources={[{
-          name: 'Rooms',
+          name: 'Devices',
           data: [{
-            text: 'Station 1',
+            text: 'Device 1',
             value: 1
           }, {
-            text: 'Station 2',
+            text: 'Device 2',
             value: 2,
             color: '#FF7272'
           }],
-          field: 'RoomID',
+          field: 'StationID',
           valueField: 'value',
           textField: 'text',
           colorField: 'color'
         }, {
-          name: 'Persons',
+          name: 'Sectors',
           data: [{
-            text: 'Peter',
+            text: 'SectorA',
             value: 1,
             color: '#5392E4'
           }, {
-            text: 'Alex',
+            text: 'SectorB',
             value: 2,
             color: '#54677B'
           }],
-          field: 'PersonIDs',
+          field: 'DeviceIDs',
           valueField: 'value',
           textField: 'text',
           colorField: 'color'
-        }]}>
+        }]}
+        onDataChange={handleDataChange} view={view} 
+        onViewChange={handleViewChange} date={date} 
+        onDateChange={handleDateChange} editable={true} 
+        timezone={timezone} modelFields={customModelFields} >
           <TimelineView />
           <DayView />
           <WeekView />

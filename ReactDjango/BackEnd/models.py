@@ -9,3 +9,6 @@ class Schedular(models.Model):
     description = models.CharField(max_length=500, blank=True)
     start = models.DateTimeField(default=datetime.now(), blank=True)
     end = models.DateTimeField(default=datetime.now(), blank=True)
+    recurrenceId = models.CharField(max_length=200)
+    recurrenceRule = models.CharField(max_length=500, blank=True)
+    recurrenceExceptions = models.CharField(max_length=500, blank=True)
