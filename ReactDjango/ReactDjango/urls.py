@@ -10,5 +10,5 @@ urlpatterns = [
      path('schedulars/', views.schedular_list),
     path('schedulars/<taskId>', views.schedular_detail),
     # path('crud/', include(router.urls)),
-
+    
 ]

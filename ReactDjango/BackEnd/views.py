@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from . serializer import *
 
 # Create your views here.
+
 # class ReactView(APIView):
 
 #     serializer_class = ReactSerializer
